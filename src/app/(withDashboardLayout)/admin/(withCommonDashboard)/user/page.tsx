@@ -164,7 +164,8 @@ const UserManagement = () => {
           return cellValue;
       }
     },
-    []
+    [onOpen]
+    // Added onOpen In Here
   );
 
   const userData = data?.data?.data || [];

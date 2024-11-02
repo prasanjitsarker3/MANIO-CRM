@@ -118,7 +118,8 @@ const BannerPage = () => {
           return cellValue;
       }
     },
-    []
+    [onOpen]
+    //Added opOpen In here
   );
 
   const bannerData = data?.data?.data || [];
