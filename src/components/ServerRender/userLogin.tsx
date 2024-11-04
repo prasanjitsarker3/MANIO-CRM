@@ -4,7 +4,7 @@ import { FieldValues } from "react-hook-form";
 import { AuthKey } from "../Lib/AuthKey";
 
 export const userLogin = async (formData: FieldValues) => {
-  const res = await fetch(`http://localhost:5000/api/v1/auth/login`, {
+  const res = await fetch(`${process.env.API_URL}/auth/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
