@@ -5,6 +5,7 @@ import DeleteOrder from "@/components/ModaretorDashboardComponent/OrderMangement
 import { useGetAllConfirmOrderFromDBQuery } from "@/components/Redux/OrderApi/orderApi";
 import {
   Pagination,
+  Spinner,
   Table,
   TableBody,
   TableCell,
@@ -40,7 +41,9 @@ const ConfirmOrder = () => {
 
   const { data, isLoading } = useGetAllConfirmOrderFromDBQuery(query);
   if (isLoading) {
-    <h1>Loading...</h1>;
+    <div className=" w-full flex justify-center items-center pt-8">
+      <Spinner />
+    </div>;
   }
 
   const renderCell = React.useCallback(

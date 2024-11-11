@@ -29,20 +29,13 @@ const DashboardSidebar = () => {
           isSidebarCollapsed ? "px-5" : "px-8"
         }`}
       >
-        <Image
-          src={
-            "https://i.ibb.co.com/yBS45Dj/KKKK-2023-Nov-12-07-17-27-AM-000-Customized-View19374045592.jpg"
-          }
-          alt="Logo"
-          width={30}
-          height={30}
-        />
+        <Image src={"/manio-logo.png"} alt="Logo" width={30} height={30} />
         <h1
           className={`${
             isSidebarCollapsed ? "hidden" : "block"
           } font-extrabold text-xl text-yellow-500`}
         >
-          MANIO
+          MANIO BD
         </h1>
         <button
           className="md:hidden px-3 py-3 bg-gray-300 rounded-full hover:bg-blue-100"

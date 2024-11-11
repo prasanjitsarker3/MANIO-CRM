@@ -19,7 +19,6 @@ const DeleteViewOrder = ({ orderId }: { orderId: string }) => {
     const toastId = toast.loading("Processing...");
     try {
       const res = await deleteOrder(orderId);
-      console.log(res);
       if (res?.data?.statusCode === 200) {
         toast.success(res?.data?.message, { id: toastId, duration: 1000 });
         onClose();

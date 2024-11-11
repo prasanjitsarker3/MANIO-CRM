@@ -53,7 +53,7 @@ const CreateBanner = () => {
       formData.append("file", img[0]);
     }
     const res = await createBanner(formData);
-    console.log("Res", res);
+
     if (res?.data?.statusCode === 201) {
       toast.success(res?.data?.message, { id: toastId, duration: 1000 });
       onClose();

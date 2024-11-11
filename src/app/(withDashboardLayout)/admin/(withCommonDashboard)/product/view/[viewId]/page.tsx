@@ -3,7 +3,7 @@
 import { useGetSingleProductQuery } from "@/components/Redux/ProductApi/productApi";
 import { Spinner } from "@nextui-org/react";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 
 interface ProductProps {
   params: {
@@ -14,6 +14,7 @@ interface ProductProps {
 const ViewProduct: React.FC<ProductProps> = ({ params }) => {
   const viewId = params.viewId;
   const { data, isLoading } = useGetSingleProductQuery(viewId);
+  const [activeSection, setActiveSection] = useState("description");
 
   if (isLoading) {
     return (
@@ -24,7 +25,6 @@ const ViewProduct: React.FC<ProductProps> = ({ params }) => {
   }
 
   const productData = data?.data;
-
   if (!productData) {
     return <h1>No product data found</h1>;
   }
@@ -77,6 +77,35 @@ const ViewProduct: React.FC<ProductProps> = ({ params }) => {
               />
             ))}
           </div>
+        </div>
+      </div>
+      <div>
+        <div className="mt-4 space-x-6">
+          <button
+            onClick={() => setActiveSection("description")}
+            className={`px-6 py-2 border border-gray-100 ${
+              activeSection === "description" ? "bg-gray-300" : ""
+            } text-slate-800`}
+          >
+            Description
+          </button>
+          <button
+            onClick={() => setActiveSection("delivery")}
+            className={`px-6 py-2 border border-gray-100 ${
+              activeSection === "delivery" ? "bg-gray-300" : ""
+            } text-slate-800`}
+          >
+            Delivery
+          </button>
+        </div>
+        <div className="project-description text-base text-slate-700 pt-6 pb-16">
+          {activeSection === "description" ? (
+            <div
+              dangerouslySetInnerHTML={{ __html: productData?.description }}
+            />
+          ) : (
+            <div dangerouslySetInnerHTML={{ __html: productData?.delivery }} />
+          )}
         </div>
       </div>
     </div>

@@ -177,7 +177,7 @@ const ProductPage = () => {
     <div className=" bg-white p-10">
       <div className="flex flex-col md:flex-row items-center gap-4">
         <Link href={"/admin/product/create"}>
-          <button className=" bg-[#0c9ecf]  w-60 md:w-full text-white py-2 px-4 flex items-center gap-2 rounded-md">
+          <button className=" bg-[#0c9ecf]  w-60 md:w-full text-white py-2 px-4 flex items-center gap-2">
             <Plus />
             Add New Product
           </button>
@@ -187,7 +187,7 @@ const ProductPage = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
             type="search"
             placeholder="Searching..."
-            className="pl-10 pr-4 py-2  w-60 md:w-full border border-gray-200 bg-white rounded-lg focus:outline-none focus:border-blue-500"
+            className="pl-10 pr-4 py-2  w-60 md:w-full border border-gray-200 bg-white focus:outline-none focus:border-blue-500"
           />
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <Search className="text-gray-500" size={20} />
@@ -196,7 +196,7 @@ const ProductPage = () => {
         <Select
           size="sm"
           label="Filter By Category"
-          className=" w-60"
+          className=" w-60 rounded-none"
           onChange={(e) => setCategoryId(e.target.value)}
         >
           <SelectItem value="" key="">

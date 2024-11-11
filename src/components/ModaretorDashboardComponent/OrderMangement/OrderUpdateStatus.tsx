@@ -24,14 +24,12 @@ const OrderUpdateStatus = ({ orderId }: { orderId: string }) => {
   const { register, handleSubmit, reset } = useForm();
 
   const onSubmit = async (data: any) => {
-    console.log("Data", data);
     const toastId = toast.loading("Updating...");
     try {
       const res = await orderUpdateStatus({
         id: orderId,
         updateData: { status: data.status },
       });
-      console.log("res", res);
       if (res?.data?.statusCode === 200) {
         toast.success(res?.data?.message, { id: toastId, duration: 1000 });
         reset();

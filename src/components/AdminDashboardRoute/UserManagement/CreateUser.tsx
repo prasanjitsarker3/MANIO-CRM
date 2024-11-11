@@ -41,7 +41,6 @@ const CreateUser = () => {
     const toastId = toast.loading("Creating...");
     try {
       const res = await createUser(data);
-      console.log("user res", res);
       if (res?.data?.statusCode === 201) {
         toast.success(res?.data?.message, { id: toastId, duration: 1000 });
         reset();
@@ -57,10 +56,10 @@ const CreateUser = () => {
   return (
     <div>
       <Button
-        size="sm"
+        size="md"
         isDisabled={isLoading}
         onClick={onOpen}
-        className=" bg-[#0c9ecf] text-white py-1 px-4 flex items-center gap-2 rounded-md"
+        className=" bg-[#0c9ecf] text-white py-2 px-4 flex items-center text-base gap-2 rounded-none "
       >
         <Plus />
         Add New Moderator

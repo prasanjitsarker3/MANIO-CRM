@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+import DeleteViewOrder from "@/components/ModaretorDashboardComponent/OrderMangement/DeleteViewOrder";
+import OrderReturn from "@/components/ModaretorDashboardComponent/OrderMangement/OrderReturn";
 import { useGetSingleOrderViewQuery } from "@/components/Redux/OrderApi/orderApi";
+import { Spinner } from "@nextui-org/react";
 import Image from "next/image";
 import React from "react";
 
@@ -13,14 +16,19 @@ const DeliveryProductShow: React.FC<OrderProps> = ({ params }) => {
   const orderId = params.orderId;
   const { data, isLoading } = useGetSingleOrderViewQuery(orderId);
   if (isLoading) {
-    <h1>Loading...</h1>;
+    return (
+      <div className=" w-full  pt-8 flex justify-center items-center">
+        <Spinner />
+      </div>
+    );
   }
   const orderData = data?.data;
-  console.log(orderData);
 
   return (
     <div className=" bg-white p-10">
-      <h1 className="text-xl font-bold mb-4 primaryColor">Order Details</h1>
+      <h1 className="text-xl font-bold mb-4 primaryColor">
+        Delivery Order Details
+      </h1>
       {orderData ? (
         <div className="space-y-4">
           <div className=" grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -66,9 +74,6 @@ const DeliveryProductShow: React.FC<OrderProps> = ({ params }) => {
                   year: "numeric",
                 })}
               </h1>
-              {/* <h1 className=" px-4 py-2 bg-gray-100 text-slate-800 text-base">
-                <span className=" font-medium">Order ID: </span> {orderData?.id}
-              </h1> */}
             </div>
           </div>
           {orderData.orderItems && orderData.orderItems.length > 0 ? (
@@ -116,6 +121,12 @@ const DeliveryProductShow: React.FC<OrderProps> = ({ params }) => {
       ) : (
         <p>Order not found.</p>
       )}
+
+      <div className=" flex flex-col md:flex-row justify-center items-center gap-8 py-12">
+        <DeleteViewOrder orderId={orderData?.id} />
+
+        <OrderReturn orderId={orderData?.id} />
+      </div>
     </div>
   );
 };

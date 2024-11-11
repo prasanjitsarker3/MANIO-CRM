@@ -104,7 +104,7 @@ const AmdinDashobardMetaData = () => {
           <div className="overflow-x-auto bg-gray-100 p-4 h-full">
             <table className="min-w-full table-auto border-collapse">
               <thead>
-                <tr className="bg-gray-100 primaryColor text-left">
+                <tr className="bg-gray-100 primaryColor text-sm md:text-lg text-left">
                   <th className="py-2 px-4">Date</th>
                   <th className="py-2 px-4">Total Orders</th>
                   <th className="py-2 px-4">Total Amount</th>
@@ -130,7 +130,7 @@ const AmdinDashobardMetaData = () => {
 
         <div className="mx-4 flex flex-col justify-between">
           <div className="overflow-x-auto bg-gray-100 p-4 h-full">
-            <table className="min-w-full table-auto border-collapse">
+            <table className="min-w-full table-auto border-collapse text-sm md:text-lg">
               <thead>
                 <tr className="primaryColor">
                   <th className="px-4 py-2 text-left">Image</th>

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import DeleteOrder from "@/components/ModaretorDashboardComponent/OrderMangement/DeleteOrder";
-import { useGetAllOrderFromDBQuery } from "@/components/Redux/OrderApi/orderApi";
+import { useGetAllReturnOrderQuery } from "@/components/Redux/OrderApi/orderApi";
 import {
   Pagination,
   Spinner,
@@ -28,7 +28,7 @@ const columns = [
   { name: "ACTIONS", uid: "actions" },
 ];
 
-const OrderManagement = () => {
+const ReturnProduct = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
@@ -39,9 +39,9 @@ const OrderManagement = () => {
     limit,
   };
 
-  const { data, isLoading } = useGetAllOrderFromDBQuery(query);
+  const { data, isLoading } = useGetAllReturnOrderQuery(query);
   if (isLoading) {
-    <div className=" w-full flex justify-center items-center pt-8">
+    <div className=" pt-8 w-full flex justify-center items-center">
       <Spinner />
     </div>;
   }
@@ -66,7 +66,7 @@ const OrderManagement = () => {
         case "totalPrice":
           return (
             <p className="text-bold text-lg capitalize primaryColor">
-              {orderData?.totalPrice}
+              {parseInt(orderData.totalPrice).toFixed(2)}
             </p>
           );
 
@@ -96,7 +96,7 @@ const OrderManagement = () => {
           return (
             <div className=" w-full relative flex justify-center items-center gap-2">
               <Tooltip content="View Product">
-                <Link href={`/user/order/${orderData?.id}`}>
+                <Link href={`/user/return/${orderData?.id}`}>
                   <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
                     <EyeIcon />
                   </span>
@@ -128,14 +128,14 @@ const OrderManagement = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
           type="search"
           placeholder="Searching..."
-          className="pl-10 pr-4 py-1 w-52 border border-gray-200 bg-white rounded-lg focus:outline-none focus:border-blue-500"
+          className="pl-10 pr-4 py-2 w-full md:w-52 border border-gray-200 bg-white focus:outline-none focus:border-blue-500"
         />
         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
           <Search className="text-gray-500" size={20} />
         </div>
       </div>
       <div>
-        <div className=" pt-6">
+        <div className=" pt-6 overflow-x-auto">
           <Table
             isStriped
             removeWrapper
@@ -177,4 +177,4 @@ const OrderManagement = () => {
   );
 };
 
-export default OrderManagement;
+export default ReturnProduct;

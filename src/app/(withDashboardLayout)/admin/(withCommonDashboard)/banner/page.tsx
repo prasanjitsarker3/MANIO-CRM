@@ -123,6 +123,7 @@ const BannerPage = () => {
   );
 
   const bannerData = data?.data?.data || [];
+
   const metaData = data?.data?.meta;
   const total = metaData?.total || 0;
   const countPage = Math.ceil(total / limit);

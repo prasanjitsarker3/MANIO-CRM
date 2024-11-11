@@ -34,8 +34,8 @@ const SidebarLink = ({
         className={`cursor-pointer flex items-center gap-3 ${
           isCollapsed ? "justify-center py-4" : "justify-start px-8 py-4"
         }
-             hover:bg-[#ceecf5] transition-colors ${
-               isActive ? "bg-[#0c9ecf] text-white" : "text-gray-700"
+             hover:bg-[#0c9ecf] hover:text-white transition-colors ${
+               isActive ? "bg-[#0c9ecf] text-white" : " text-slate-800"
              }`}
       >
         <Icon className=" w-6 h-6 " />
@@ -81,7 +81,7 @@ const Sidebar = () => {
           Blind Archer
         </h1>
         <button
-          className=" md:hidden px-3 py-3 bg-gray-300 rounded-full hover:bg-blue-100 "
+          className=" md:hidden px-3 py-3 bg-gray-300 rounded-full hover:bg-[#0c9ecf] hover:text-white "
           onClick={toggleSidebar}
         >
           <Menu className=" w-4 h-4" />

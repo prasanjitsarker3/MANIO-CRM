@@ -12,6 +12,10 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import dynamic from "next/dynamic";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+import "react-quill/dist/quill.snow.css";
+import { sizeData } from "@/components/Utlities/productsContants";
 
 interface ProductProps {
   params: {
@@ -34,20 +38,14 @@ type FormValues = {
   images: File[];
 };
 
-const sizeData = [
-  { id: "S", name: "S" },
-  { id: "M", name: "M" },
-  { id: "L", name: "L" },
-  { id: "XL", name: "XL" },
-  { id: "XXL", name: "XXL" },
-];
-
 const ProductUpdatePage: React.FC<ProductProps> = ({ params }) => {
   const productId = params.productID;
   const { data, isLoading } = useGetSingleProductQuery(productId);
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
   const router = useRouter();
+  const [description, setDescription] = useState("");
+  const [delivery, setDelivery] = useState("");
 
   const [updateProduct, { isLoading: updateing }] =
     useGetSingleProductUpdateMutation();
@@ -60,13 +58,24 @@ const ProductUpdatePage: React.FC<ProductProps> = ({ params }) => {
   } = useForm<FormValues>();
   useEffect(() => {
     if (data?.data) {
-      const { name, price, discount, totalProduct, size, photo } = data.data;
+      const {
+        name,
+        price,
+        discount,
+        totalProduct,
+        size,
+        photo,
+        description,
+        delivery,
+      } = data.data;
       setValue("name", name);
       setValue("price", price);
       setValue("discount", discount);
       setValue("totalProduct", totalProduct);
       setValue("size", size || []);
       setPhotos(photo || []);
+      setDescription(description || "");
+      setDelivery(delivery || "");
     }
   }, [data, setValue]);
 
@@ -106,20 +115,20 @@ const ProductUpdatePage: React.FC<ProductProps> = ({ params }) => {
       price: parseFloat(data.price.toString()),
       discount: parseFloat(data.discount.toString()),
       totalProduct: parseInt(data.totalProduct.toString(), 10),
+      description: description,
+      delivery: delivery,
       oldImg: photos,
       id: productId,
     };
 
     const submitData = new FormData();
     submitData.append("data", JSON.stringify(updateData));
-
     selectedImages.forEach((file: File) => {
       submitData.append("file", file);
     });
 
     try {
       const res = await updateProduct(submitData);
-      console.log(res);
       if (res?.data?.statusCode === 200) {
         toast.success(res?.data?.message, { id: toastId, duration: 1000 });
       } else {
@@ -260,13 +269,33 @@ const ProductUpdatePage: React.FC<ProductProps> = ({ params }) => {
           ))}
         </div>
 
+        {/* Text Editor Section */}
+        <div>
+          <div className="mb-6">
+            <h1 className=" text-slate-800 pb-3 font-semibold">
+              Product Description
+            </h1>
+            <ReactQuill
+              theme="snow"
+              value={description}
+              onChange={setDescription}
+            />
+          </div>
+          <div className="mb-6">
+            <h1 className=" text-slate-800 pb-3 font-semibold">
+              Delivery Options
+            </h1>
+            <ReactQuill theme="snow" value={delivery} onChange={setDelivery} />
+          </div>
+        </div>
+
         {/* Submit Button */}
-        <div className=" mt-6 w-full flex  justify-center mx-auto">
+        <div className=" mt-6 w-full flex  justify-center mx-auto pb-16">
           <div className="w-full flex justify-center items-center md:gap-12 gap-6">
             <Button
               size="lg"
               onClick={() => router.back()}
-              className=" md:px-12 px-6  py-2 bg-red-500 text-white rounded-md flex items-center"
+              className=" md:px-12 px-6  py-2 w-full rounded-none bg-red-500 text-white flex items-center"
             >
               <ArrowLeft size={20} /> Back Product
             </Button>
@@ -274,7 +303,7 @@ const ProductUpdatePage: React.FC<ProductProps> = ({ params }) => {
               size="lg"
               isDisabled={updateing}
               type="submit"
-              className=" md:px-12 px-6 py-2  bg-[#0c9ecf] text-white rounded-md flex items-center"
+              className=" md:px-12 px-6 py-2 w-full rounded-none  bg-[#0c9ecf] text-white flex items-center"
             >
               Update Product
               <Plus />

@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
 import { Menu } from "lucide-react";
-import Image from "next/image";
 import { useAppDispatch, useAppSelector } from "@/components/Redux/hooks";
 import { setIsSidebarCollapsed } from "@/components/Redux/State/sidebarSlice";
 import { adminRoutes } from "./dashboard.routes";
 import SidebarLink from "../DashboardRoutes.tsx/SidebarLink";
+import Image from "next/image";
 
 const AdminSidebar = () => {
   const dispatch = useAppDispatch();
@@ -30,23 +30,16 @@ const AdminSidebar = () => {
           isSidebarCollapsed ? "px-5" : "px-8"
         }`}
       >
-        <Image
-          src={
-            "https://i.ibb.co.com/yBS45Dj/KKKK-2023-Nov-12-07-17-27-AM-000-Customized-View19374045592.jpg"
-          }
-          alt="Logo"
-          width={30}
-          height={30}
-        />
+        <Image src={"/manio-logo.png"} alt="Logo" width={30} height={30} />
         <h1
           className={`${
             isSidebarCollapsed ? "hidden" : "block"
           } font-extrabold text-xl text-yellow-500`}
         >
-          MANIO
+          MANIO BD
         </h1>
         <button
-          className="md:hidden px-3 py-3 bg-gray-300 rounded-full hover:bg-blue-100"
+          className="md:hidden px-3 py-3 bg-gray-300 rounded-full hover:bg-[#0c9ecf] hover:text-white"
           onClick={toggleSidebar}
         >
           <Menu className="w-4 h-4" />

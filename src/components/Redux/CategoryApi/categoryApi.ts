@@ -4,12 +4,14 @@ import { baseApi } from "../baseApi";
 const categoryApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     createNewCategory: builder.mutation({
-      query: (data: any) => ({
-        url: "/category/created",
-        method: "POST",
-        contentType: "multipart/form-data",
-        body: data,
-      }),
+      query: (data: any) => {
+        return {
+          url: "/category/created",
+          method: "POST",
+          contentType: "multipart/form-data",
+          body: data,
+        };
+      },
       invalidatesTags: ["category"],
     }),
     getAllCategory: builder.query({

@@ -1,4 +1,10 @@
-import { PackageCheck, Layout, ListOrdered, FolderDot } from "lucide-react";
+import {
+  PackageCheck,
+  Layout,
+  ListOrdered,
+  FolderDot,
+  CornerDownLeft,
+} from "lucide-react";
 
 export const dashboardRoutes = [
   { href: "/user", icon: Layout, label: "Dashboard" },
@@ -12,5 +18,10 @@ export const dashboardRoutes = [
     href: "/user/delivery",
     icon: PackageCheck,
     label: "Delivery Order",
+  },
+  {
+    href: "/user/return",
+    icon: CornerDownLeft,
+    label: "Return Order",
   },
 ];

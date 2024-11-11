@@ -10,6 +10,7 @@ import { setUser } from "@/components/Redux/State/authSlice";
 import { jwtDecode } from "jwt-decode";
 import { useRouter } from "next/navigation";
 import { Spinner } from "@nextui-org/react";
+import Image from "next/image";
 
 interface LoginFormInputs {
   email: string;
@@ -65,9 +66,16 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="text-[#0c9ecf] bg-gray-200 p-8 w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
+        <div className=" w-full mx-auto">
+          <Image
+            src={"/manio-logo.png"}
+            alt=" "
+            width={100}
+            height={100}
+            className=" mx-auto pb-3 flex justify-center items-center"
+          />
+        </div>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          {/* Email Field */}
           <div>
             <label
               htmlFor="email"

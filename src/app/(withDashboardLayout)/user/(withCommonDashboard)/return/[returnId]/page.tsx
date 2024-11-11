@@ -1,31 +1,33 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import DeleteViewOrder from "@/components/ModaretorDashboardComponent/OrderMangement/DeleteViewOrder";
-import OrderUpdateStatus from "@/components/ModaretorDashboardComponent/OrderMangement/OrderUpdateStatus";
 import { useGetSingleOrderViewQuery } from "@/components/Redux/OrderApi/orderApi";
-import { Button, Spinner } from "@nextui-org/react";
-import { FileText } from "lucide-react";
+import { Spinner } from "@nextui-org/react";
 import Image from "next/image";
 import React from "react";
 
 interface OrderProps {
   params: {
-    orderId: string;
+    returnId: string;
   };
 }
-const ViewOrderPage: React.FC<OrderProps> = ({ params }) => {
-  const orderId = params.orderId;
+const ReturnProductView: React.FC<OrderProps> = ({ params }) => {
+  const orderId = params.returnId;
   const { data, isLoading } = useGetSingleOrderViewQuery(orderId);
   if (isLoading) {
-    <div className=" w-full flex justify-center items-center pt-8">
-      <Spinner />
-    </div>;
+    return (
+      <div className=" w-full  pt-8 flex justify-center items-center">
+        <Spinner />
+      </div>
+    );
   }
   const orderData = data?.data;
 
   return (
     <div className=" bg-white p-10">
-      <h1 className="text-xl font-bold mb-4 primaryColor">Order Details</h1>
+      <h1 className="text-xl font-bold mb-4 primaryColor">
+        Delivery Order Details
+      </h1>
       {orderData ? (
         <div className="space-y-4">
           <div className=" grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -64,7 +66,12 @@ const ViewOrderPage: React.FC<OrderProps> = ({ params }) => {
                 })}
               </h1>
               <h1 className=" px-4 py-2 bg-gray-100 text-slate-800 text-base">
-                <span className=" font-medium">Order ID: </span> {orderData?.id}
+                <span className=" font-medium">Delivery Date: </span>{" "}
+                {new Date(orderData?.updateAt).toLocaleDateString("en-GB", {
+                  day: "numeric",
+                  month: "short",
+                  year: "numeric",
+                })}
               </h1>
             </div>
           </div>
@@ -114,16 +121,11 @@ const ViewOrderPage: React.FC<OrderProps> = ({ params }) => {
         <p>Order not found.</p>
       )}
 
-      <div className=" w-full pt-10 flex justify-center items-center mx-auto gap-12">
-        <DeleteViewOrder orderId={orderId} />
-        <Button className=" flex items-center gap-3 px-8 font-bold bg-gray-200 primaryColor rounded-none">
-          {" "}
-          <FileText /> PDF Download
-        </Button>
-        <OrderUpdateStatus orderId={orderId} />
+      <div className=" flex flex-col md:flex-row justify-center items-center gap-8 py-12">
+        <DeleteViewOrder orderId={orderData?.id} />
       </div>
     </div>
   );
 };
 
-export default ViewOrderPage;
+export default ReturnProductView;

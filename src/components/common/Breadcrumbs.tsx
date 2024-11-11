@@ -44,6 +44,16 @@ const BreadcrumbHeader: React.FC = () => {
       { name: "Delivery", path: "/user/delivery" },
       { name: `Delivery View`, path: `/user/delivery/${id}`, disabled: true },
     ],
+    "/user/return": [
+      { name: "Dashboard", path: "/user" },
+      { name: "Return", path: "/user/return" },
+    ],
+
+    "/user/return/[id]": (id: string) => [
+      { name: "Dashboard", path: "/user" },
+      { name: "Return", path: "/user/return" },
+      { name: `Return View`, path: `/user/return/${id}`, disabled: true },
+    ],
 
     //AdminSection
 
@@ -56,11 +66,6 @@ const BreadcrumbHeader: React.FC = () => {
       { name: "Dashboard", path: "/admin" },
       { name: "All Products", path: "/admin/product" },
     ],
-    // "/admin/product/create": [
-    //   { name: "Dashboard", path: "/admin" },
-    //   { name: "All Products", path: "/admin/product" },
-    //   { name: "Create Product", path: "/admin/product/create" },
-    // ],
 
     "/admin/product/view/[id]": (id: string) => [
       { name: "Dashboard", path: "/admin" },
@@ -114,10 +119,19 @@ const BreadcrumbHeader: React.FC = () => {
       { name: "Dashboard", path: "/admin" },
       { name: "Banner", path: "/admin/banner" },
     ],
+    "/admin/return": [
+      { name: "Dashboard", path: "/admin" },
+      { name: "Return", path: "/admin/return" },
+    ],
+    "/admin/return/[id]": (id: string) => [
+      { name: "Dashboard", path: "/admin" },
+      { name: "Return", path: "/admin/return" },
+      { name: `Return View`, path: `/admin/return/${id}`, disabled: true },
+    ],
   };
 
   const dynamicMatch = currentPath.match(
-    /\/(user|admin)\/(order|delivery|totalorder|totalpending|banner|product(?:\/view)?)\/([a-f0-9-]+)/
+    /\/(user|admin)\/(order|delivery|return|totalorder|totalpending|banner|product(?:\/view)?)\/([a-f0-9-]+)/
   );
   const dynamicId = dynamicMatch ? dynamicMatch[3] : null;
 
@@ -132,24 +146,6 @@ const BreadcrumbHeader: React.FC = () => {
   } else {
     items = (breadcrumbItems[currentPath] as BreadcrumbItemType[]) || [];
   }
-
-  // const dynamicIdMatch = currentPath.match(
-  //   /\/(user|admin)\/(order|delivery|product\/view)\/([a-f0-9-]+)/
-  // );
-  // const dynamicId = dynamicIdMatch ? dynamicIdMatch[3] : null;
-
-  // let items: BreadcrumbItemType[] = [];
-
-  // if (dynamicId) {
-  //   //@ts-ignore
-  //   const route = dynamicIdMatch[1];
-  //   const dynamicBreadcrumbFunc = breadcrumbItems[`/user/${route}/[id]`] as (
-  //     id: string
-  //   ) => BreadcrumbItemType[];
-  //   items = dynamicBreadcrumbFunc(dynamicId);
-  // } else {
-  //   items = (breadcrumbItems[currentPath] as BreadcrumbItemType[]) || [];
-  // }
 
   return (
     <NextUIBreadcrumbs className="bg-gray-100 px-6 py-2">

@@ -3,7 +3,7 @@
 import DeleteViewOrder from "@/components/ModaretorDashboardComponent/OrderMangement/DeleteViewOrder";
 import OrderUpdateStatus from "@/components/ModaretorDashboardComponent/OrderMangement/OrderUpdateStatus";
 import { useGetSingleOrderViewQuery } from "@/components/Redux/OrderApi/orderApi";
-import { Button } from "@nextui-org/react";
+import { Button, Spinner } from "@nextui-org/react";
 import { FileText } from "lucide-react";
 import Image from "next/image";
 import React from "react";
@@ -17,10 +17,13 @@ const PendingOrderView: React.FC<OrderProps> = ({ params }) => {
   const orderId = params.orderId;
   const { data, isLoading } = useGetSingleOrderViewQuery(orderId);
   if (isLoading) {
-    <h1>Loading...</h1>;
+    return (
+      <div className="  w-full flex justify-center items-center pt-8">
+        <Spinner />
+      </div>
+    );
   }
   const orderData = data?.data;
-  console.log(orderData);
 
   return (
     <div className=" bg-white p-10">

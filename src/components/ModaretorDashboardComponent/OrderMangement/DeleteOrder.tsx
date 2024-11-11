@@ -20,7 +20,6 @@ const DeleteOrder = ({ orderId }: { orderId: string }) => {
     const toastId = toast.loading("Processing...");
     try {
       const res = await deleteOrder(orderId);
-      console.log(res);
       if (res?.data?.statusCode === 200) {
         toast.success(res?.data?.message, { id: toastId, duration: 1000 });
         onClose();
@@ -44,9 +43,6 @@ const DeleteOrder = ({ orderId }: { orderId: string }) => {
 
       <Modal isOpen={isOpen} onOpenChange={onClose}>
         <ModalContent>
-          {/* <ModalHeader className="flex flex-col gap-1 text-[#0c9ecf]">
-            Add New Moderator
-          </ModalHeader> */}
           <ModalBody>
             <div className=" py-8 space-y-3">
               <div className=" w-12 h-12 mx-auto rounded-full border border-gray-200 flex justify-center items-center">

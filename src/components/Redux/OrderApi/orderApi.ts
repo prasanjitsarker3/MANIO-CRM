@@ -35,6 +35,14 @@ const orderApi = baseApi.injectEndpoints({
       }),
       providesTags: ["order"],
     }),
+    getAllReturnOrder: builder.query({
+      query: (arg: any) => ({
+        url: "/order/returnOrder",
+        method: "GET",
+        params: arg,
+      }),
+      providesTags: ["order"],
+    }),
     getSingleOrderView: builder.query({
       query: (id: string) => ({
         url: `/order/${id}`,
@@ -79,4 +87,5 @@ export const {
   useGetAllDeliveryOrderFromDBQuery,
   usePdfDownloadFromDBMutation,
   useGetAllOrderForAdminQuery,
+  useGetAllReturnOrderQuery,
 } = orderApi;

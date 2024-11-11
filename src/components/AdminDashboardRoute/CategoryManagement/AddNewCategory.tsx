@@ -12,7 +12,8 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import { CloudUpload, Plus } from "lucide-react";
-import React from "react";
+import Image from "next/image";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -24,6 +25,8 @@ type FormValues = {
 const AddNewCategory = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [createCategory, { isLoading }] = useCreateNewCategoryMutation();
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+
   const {
     register,
     handleSubmit,
@@ -44,8 +47,17 @@ const AddNewCategory = () => {
       toast.success(res?.data?.message, { id: toastId, duration: 1000 });
       onClose();
       reset();
+      setPreviewImage(null); // Clear the preview image on successful submission
     } else {
       toast.error(res?.data?.message, { id: toastId, duration: 1000 });
+    }
+  };
+
+  // Update image preview
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setPreviewImage(URL.createObjectURL(file));
     }
   };
 
@@ -53,7 +65,7 @@ const AddNewCategory = () => {
     <div>
       <button
         onClick={onOpen}
-        className=" bg-[#0c9ecf] text-white py-1 px-4 flex items-center gap-2 rounded-md"
+        className=" bg-[#0c9ecf] text-white py-2 px-4 flex items-center gap-2 "
       >
         <Plus />
         Add Category
@@ -79,6 +91,7 @@ const AddNewCategory = () => {
                   accept="image/*"
                   {...register("img", {
                     required: "Profile photo is required",
+                    onChange: handleImageChange,
                   })}
                   className="hidden"
                 />
@@ -96,6 +109,16 @@ const AddNewCategory = () => {
               />
               {errors.name && (
                 <span className="text-red-500">{errors.name.message}</span>
+              )}
+
+              {previewImage && (
+                <Image
+                  src={previewImage}
+                  alt="Selected preview"
+                  width={100}
+                  height={100}
+                  className=" w-full h-24 rounded-md"
+                />
               )}
             </ModalBody>
             <ModalFooter className=" w-full items-center">

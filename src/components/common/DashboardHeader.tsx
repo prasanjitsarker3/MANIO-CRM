@@ -5,6 +5,7 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
+  Spinner,
 } from "@nextui-org/react";
 
 import React from "react";
@@ -34,7 +35,9 @@ const DashboardNavbar = () => {
     logoutUser(router);
   };
   if (isLoading) {
-    <h1>Loading..</h1>;
+    <div className=" w-full flex justify-center items-center pt-8">
+      <Spinner />
+    </div>;
   }
   const profileData = data?.data;
 

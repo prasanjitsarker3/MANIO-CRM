@@ -10,56 +10,31 @@ import { ArrowLeft, Plus, Trash } from "lucide-react";
 import { useCreateNewProductMutation } from "@/components/Redux/ProductApi/productApi";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { sizeData, typeData } from "@/components/Utlities/productsContants";
+import dynamic from "next/dynamic";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+import "react-quill/dist/quill.snow.css";
 
 type FormValues = {
   name: string;
   price: number;
   discount: number;
   totalProduct: number;
+  rating: number;
   size: string[];
   type: "Man" | "Woman";
   categoryId: string;
   images: File[];
 };
 
-const typeData = [
-  {
-    id: "Man",
-    name: "Man",
-  },
-  {
-    id: "Woman",
-    name: "Woman",
-  },
-];
-
-const sizeData = [
-  {
-    id: "S",
-    name: "S",
-  },
-  {
-    id: "M",
-    name: "M",
-  },
-  {
-    id: "L",
-    name: "L",
-  },
-  {
-    id: "XL",
-    name: "XL",
-  },
-  {
-    id: "XXL",
-    name: "XXL",
-  },
-];
-
 const CreateNewProduct = () => {
   const [selectedSizes, setSelectedSizes] = useState(new Set());
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+
+  const [description, setDescription] = useState("");
+  const [delivery, setDelivery] = useState("");
+
   const [createNewProduct, { isLoading: creating }] =
     useCreateNewProductMutation();
   const router = useRouter();
@@ -112,7 +87,6 @@ const CreateNewProduct = () => {
 
   const onSubmit = async (data: FormValues) => {
     const toastId = toast.loading("Creating...");
-
     const formattedData = {
       name: data.name,
       type: data.type,
@@ -121,8 +95,10 @@ const CreateNewProduct = () => {
       price: parseFloat(data.price.toString()),
       discount: parseFloat(data.discount.toString()),
       totalProduct: parseInt(data.totalProduct.toString(), 10),
+      rating: parseInt(data.rating.toString()),
+      description: description,
+      delivery: delivery,
     };
-    console.log(formattedData);
     const formData = new FormData();
     formData.append("data", JSON.stringify(formattedData));
 
@@ -153,11 +129,13 @@ const CreateNewProduct = () => {
       </h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
+          {/* First Section */}
           <div className=" grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Name */}
             <div className="mb-4">
               <Input
                 label="Product Name"
+                className=" bg-gray-100 rounded-none"
                 {...register("name", { required: "Product name is required" })}
                 fullWidth
               />
@@ -170,7 +148,7 @@ const CreateNewProduct = () => {
               <Select
                 size="md"
                 label="Select Category"
-                className="w-full"
+                className=" w-full bg-gray-100 rounded-none"
                 {...register("categoryId", {
                   required: "Category is required",
                 })}
@@ -192,7 +170,7 @@ const CreateNewProduct = () => {
               <Select
                 size="md"
                 label="Select Gender"
-                className="w-full"
+                className="w-full bg-gray-100 rounded-none"
                 {...register("type", {
                   required: "Gender is required",
                 })}
@@ -210,6 +188,8 @@ const CreateNewProduct = () => {
               )}
             </div>
           </div>
+
+          {/* Second Section */}
           <div className=" grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Size */}
             <div className="">
@@ -222,7 +202,7 @@ const CreateNewProduct = () => {
                   //@ts-ignore
                   selectedKeys={selectedSizes}
                   onSelectionChange={handleSizeChange}
-                  className="w-full"
+                  className="w-full bg-gray-100 rounded-none"
                   {...register("size", {
                     required: "Size is required",
                   })}
@@ -244,6 +224,7 @@ const CreateNewProduct = () => {
               <Input
                 label="Price"
                 type="number"
+                className=" bg-gray-100 rounded-none"
                 {...register("price", { required: "Price is required" })}
                 fullWidth
               />
@@ -256,6 +237,7 @@ const CreateNewProduct = () => {
               <Input
                 label="Discount"
                 type="number"
+                className=" bg-gray-100 rounded-none"
                 {...register("discount", { required: "Discount is required" })}
                 fullWidth
               />
@@ -264,6 +246,7 @@ const CreateNewProduct = () => {
               )}
             </div>
           </div>
+
           {/* Preview Selected Images */}
           <div className=" grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="mb-4">
@@ -308,6 +291,7 @@ const CreateNewProduct = () => {
               <Input
                 label="Total Product"
                 type="number"
+                className=" bg-gray-100 rounded-none"
                 {...register("totalProduct", {
                   required: "Total product is required",
                 })}
@@ -317,15 +301,51 @@ const CreateNewProduct = () => {
                 <p className="text-red-500">{errors.totalProduct.message}</p>
               )}
             </div>
+            {/* Product  Rating*/}
+            <div className="mb-4 mt-8">
+              <Input
+                label="Product Rating"
+                type="number"
+                className=" bg-gray-100 rounded-none"
+                {...register("rating")}
+                fullWidth
+              />
+              {errors.totalProduct && (
+                <p className="text-red-500">{errors.totalProduct.message}</p>
+              )}
+            </div>
+          </div>
+          {/* Text Editor Implement */}
+          <div>
+            <div className="mb-6">
+              <h1 className=" text-slate-800 pb-3 font-semibold">
+                Product Description
+              </h1>
+              <ReactQuill
+                theme="snow"
+                value={description}
+                onChange={setDescription}
+              />
+            </div>
+            <div className="mb-6">
+              <h1 className=" text-slate-800 pb-3 font-semibold">
+                Delivery Options
+              </h1>
+              <ReactQuill
+                theme="snow"
+                value={delivery}
+                onChange={setDelivery}
+              />
+            </div>
           </div>
         </div>
 
         {/* Submit Button */}
-        <div className=" flex items-center gap-12">
+        <div className=" flex items-center gap-12 pb-20">
           <Button
             onClick={() => router.back()}
             fullWidth
-            className=" bg-red-600 text-white mt-4 flex items-center gap-2"
+            className=" bg-red-600 text-white mt-4 flex items-center gap-2 rounded-none"
           >
             <ArrowLeft size={20} />
             Back All Product
@@ -334,7 +354,7 @@ const CreateNewProduct = () => {
             isDisabled={creating}
             type="submit"
             fullWidth
-            className="bg-[#0c9ecf] text-white mt-4 flex items-center gap-2"
+            className="bg-[#0c9ecf] text-white mt-4 flex items-center gap-2 rounded-none"
           >
             <Plus /> Add New Product
           </Button>
