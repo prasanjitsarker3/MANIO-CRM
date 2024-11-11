@@ -11,6 +11,7 @@ import { useCreateNewProductMutation } from "@/components/Redux/ProductApi/produ
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { sizeData, typeData } from "@/components/Utlities/productsContants";
+
 import dynamic from "next/dynamic";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.snow.css";
