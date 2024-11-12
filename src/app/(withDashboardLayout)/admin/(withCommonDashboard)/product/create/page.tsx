@@ -11,10 +11,7 @@ import { useCreateNewProductMutation } from "@/components/Redux/ProductApi/produ
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { sizeData, typeData } from "@/components/Utlities/productsContants";
-
-import dynamic from "next/dynamic";
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
-import "react-quill/dist/quill.snow.css";
+import TextEditor from "@/components/Utlities/TextEditor";
 
 type FormValues = {
   name: string;
@@ -33,7 +30,7 @@ const CreateNewProduct = () => {
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState<string>("");
   const [delivery, setDelivery] = useState("");
 
   const [createNewProduct, { isLoading: creating }] =
@@ -121,6 +118,13 @@ const CreateNewProduct = () => {
     } catch (err: any) {
       console.log(err?.message);
     }
+  };
+
+  const handleEditorChange = (newContent: any) => {
+    setDescription(newContent);
+  };
+  const handleDeliveryChange = (newContent: any) => {
+    setDelivery(newContent);
   };
 
   return (
@@ -318,26 +322,16 @@ const CreateNewProduct = () => {
           </div>
           {/* Text Editor Implement */}
           <div>
-            <div className="mb-6">
-              <h1 className=" text-slate-800 pb-3 font-semibold">
-                Product Description
-              </h1>
-              <ReactQuill
-                theme="snow"
-                value={description}
-                onChange={setDescription}
-              />
-            </div>
-            <div className="mb-6">
-              <h1 className=" text-slate-800 pb-3 font-semibold">
-                Delivery Options
-              </h1>
-              <ReactQuill
-                theme="snow"
-                value={delivery}
-                onChange={setDelivery}
-              />
-            </div>
+            <TextEditor
+              value={description}
+              onEditorChange={handleEditorChange}
+            />
+          </div>
+          <div className=" mt-6">
+            <TextEditor
+              value={delivery}
+              onEditorChange={handleDeliveryChange}
+            />
           </div>
         </div>
 

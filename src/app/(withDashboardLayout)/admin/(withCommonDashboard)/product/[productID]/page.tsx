@@ -12,9 +12,6 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import dynamic from "next/dynamic";
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
-import "react-quill/dist/quill.snow.css";
 import { sizeData } from "@/components/Utlities/productsContants";
 
 interface ProductProps {
@@ -44,8 +41,6 @@ const ProductUpdatePage: React.FC<ProductProps> = ({ params }) => {
   const [photos, setPhotos] = useState<Photo[]>([]);
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
   const router = useRouter();
-  const [description, setDescription] = useState("");
-  const [delivery, setDelivery] = useState("");
 
   const [updateProduct, { isLoading: updateing }] =
     useGetSingleProductUpdateMutation();
@@ -58,24 +53,13 @@ const ProductUpdatePage: React.FC<ProductProps> = ({ params }) => {
   } = useForm<FormValues>();
   useEffect(() => {
     if (data?.data) {
-      const {
-        name,
-        price,
-        discount,
-        totalProduct,
-        size,
-        photo,
-        description,
-        delivery,
-      } = data.data;
+      const { name, price, discount, totalProduct, size, photo } = data.data;
       setValue("name", name);
       setValue("price", price);
       setValue("discount", discount);
       setValue("totalProduct", totalProduct);
       setValue("size", size || []);
       setPhotos(photo || []);
-      setDescription(description || "");
-      setDelivery(delivery || "");
     }
   }, [data, setValue]);
 
@@ -115,8 +99,6 @@ const ProductUpdatePage: React.FC<ProductProps> = ({ params }) => {
       price: parseFloat(data.price.toString()),
       discount: parseFloat(data.discount.toString()),
       totalProduct: parseInt(data.totalProduct.toString(), 10),
-      description: description,
-      delivery: delivery,
       oldImg: photos,
       id: productId,
     };
@@ -138,7 +120,6 @@ const ProductUpdatePage: React.FC<ProductProps> = ({ params }) => {
       console.log(err?.message);
     }
   };
-
   return (
     <div className="bg-white p-10">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -267,26 +248,6 @@ const ProductUpdatePage: React.FC<ProductProps> = ({ params }) => {
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Text Editor Section */}
-        <div>
-          <div className="mb-6">
-            <h1 className=" text-slate-800 pb-3 font-semibold">
-              Product Description
-            </h1>
-            <ReactQuill
-              theme="snow"
-              value={description}
-              onChange={setDescription}
-            />
-          </div>
-          <div className="mb-6">
-            <h1 className=" text-slate-800 pb-3 font-semibold">
-              Delivery Options
-            </h1>
-            <ReactQuill theme="snow" value={delivery} onChange={setDelivery} />
-          </div>
         </div>
 
         {/* Submit Button */}
