@@ -64,7 +64,6 @@ export default function TextEditor({ value, onEditorChange }: TextEditorProps) {
           "typography",
           "inlinecss",
           "markdown",
-          // Early access to document converters
           "importword",
           "exportword",
           "exportpdf",
