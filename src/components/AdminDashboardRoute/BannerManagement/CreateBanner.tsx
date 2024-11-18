@@ -8,6 +8,8 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  Select,
+  SelectItem,
   useDisclosure,
 } from "@nextui-org/react";
 import { CloudUpload, Plus } from "lucide-react";
@@ -19,6 +21,7 @@ import { toast } from "sonner";
 type FormValues = {
   img: FileList;
   name: string;
+  type: string;
 };
 
 const CreateBanner = () => {
@@ -47,8 +50,8 @@ const CreateBanner = () => {
   const onSubmit = async (data: FormValues) => {
     const toastId = toast.loading("Creating...");
     const formData = new FormData();
-    const { img, name } = data;
-    formData.append("data", JSON.stringify(name));
+    const { img, name, type } = data;
+    formData.append("data", JSON.stringify({ name, type }));
     if (img.length > 0) {
       formData.append("file", img[0]);
     }
@@ -105,26 +108,41 @@ const CreateBanner = () => {
               {errors.img && (
                 <span className="text-red-500">{errors.img.message}</span>
               )}
+
               <Input
                 size="lg"
                 placeholder="Category Name"
                 {...register("name", {
                   required: "Category name is required",
                 })}
-                className="mb-4"
+                className="mb-4 rounded-none"
               />
               {errors.name && (
                 <span className="text-red-500">{errors.name.message}</span>
               )}
+
+              <Select
+                size="sm"
+                label="Select Role"
+                className="w-full"
+                {...register("type")}
+              >
+                <SelectItem key={"banner"} value={"banner"}>
+                  Main Banner
+                </SelectItem>
+                <SelectItem key={"add"} value={"add"}>
+                  Add
+                </SelectItem>
+              </Select>
 
               {previewImage && (
                 <div className="mt-4">
                   <Image
                     src={previewImage}
                     alt="Selected Preview"
-                    width={100}
-                    height={100}
-                    className="w-full h-48 object-cover rounded-md border"
+                    width={300}
+                    height={300}
+                    className="w-full h-60 object-cover rounded-md border"
                   />
                 </div>
               )}

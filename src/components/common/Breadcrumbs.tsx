@@ -128,10 +128,14 @@ const BreadcrumbHeader: React.FC = () => {
       { name: "Return", path: "/admin/return" },
       { name: `Return View`, path: `/admin/return/${id}`, disabled: true },
     ],
+    "/admin/monthly": [
+      { name: "Dashboard", path: "/admin" },
+      { name: "Monthly Data", path: "/admin/monthly" },
+    ],
   };
 
   const dynamicMatch = currentPath.match(
-    /\/(user|admin)\/(order|delivery|return|totalorder|totalpending|banner|product(?:\/view)?)\/([a-f0-9-]+)/
+    /\/(user|admin)\/(order|delivery|monthly|return|totalorder|totalpending|banner|product(?:\/view)?)\/([a-f0-9-]+)/
   );
   const dynamicId = dynamicMatch ? dynamicMatch[3] : null;
 

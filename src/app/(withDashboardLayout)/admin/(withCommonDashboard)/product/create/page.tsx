@@ -11,7 +11,9 @@ import { useCreateNewProductMutation } from "@/components/Redux/ProductApi/produ
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { sizeData, typeData } from "@/components/Utlities/productsContants";
-import TextEditor from "@/components/Utlities/TextEditor";
+import dynamic from "next/dynamic";
+import "react-quill/dist/quill.snow.css";
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 type FormValues = {
   name: string;
@@ -30,7 +32,7 @@ const CreateNewProduct = () => {
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
-  const [description, setDescription] = useState<string>("");
+  const [description, setDescription] = useState("");
   const [delivery, setDelivery] = useState("");
 
   const [createNewProduct, { isLoading: creating }] =
@@ -118,13 +120,6 @@ const CreateNewProduct = () => {
     } catch (err: any) {
       console.log(err?.message);
     }
-  };
-
-  const handleEditorChange = (newContent: any) => {
-    setDescription(newContent);
-  };
-  const handleDeliveryChange = (newContent: any) => {
-    setDelivery(newContent);
   };
 
   return (
@@ -322,16 +317,16 @@ const CreateNewProduct = () => {
           </div>
           {/* Text Editor Implement */}
           <div>
-            <TextEditor
+            <h1 className=" primaryColor text-lg py-3 ">Product Description</h1>
+            <ReactQuill
+              theme="snow"
               value={description}
-              onEditorChange={handleEditorChange}
+              onChange={setDescription}
             />
           </div>
           <div className=" mt-6">
-            <TextEditor
-              value={delivery}
-              onEditorChange={handleDeliveryChange}
-            />
+            <h1 className=" primaryColor text-lg py-3 ">Product Delivery</h1>
+            <ReactQuill theme="snow" value={delivery} onChange={setDelivery} />
           </div>
         </div>
 

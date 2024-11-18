@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import MonthlyDataShow from "../MetaDashboard/MonthlyDataShow";
+import MonthlyFilteringDataShow from "../MetaDashboard/MonthlyFilteringDataShow";
 
 const AmdinDashobardMetaData = () => {
   const { data, isLoading } = useGetAdminDashboardDataQuery({});
@@ -166,6 +167,9 @@ const AmdinDashobardMetaData = () => {
       </div>
       <div className=" mt-6 p-10 bg-gray-100 mx-4">
         <MonthlyDataShow monthlyData={monthlyData} />
+      </div>
+      <div className=" mt-6 p-10 bg-gray-50 mx-4">
+        <MonthlyFilteringDataShow />
       </div>
     </div>
   );

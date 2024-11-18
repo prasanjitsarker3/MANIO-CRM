@@ -135,7 +135,7 @@ const OrderManagement = () => {
         </div>
       </div>
       <div>
-        <div className=" pt-6">
+        <div className=" pt-6 overflow-x-auto">
           <Table
             isStriped
             removeWrapper

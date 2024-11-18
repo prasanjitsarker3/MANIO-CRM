@@ -29,6 +29,7 @@ import React, { useState } from "react";
 const columns = [
   { name: "PROFILE", uid: "image" },
   { name: "NAME", uid: "name" },
+  { name: "TYPE", uid: "type" },
   { name: "CREATE DATE", uid: "createdAt" },
   { name: "ACTIONS", uid: "actions" },
 ];
@@ -80,6 +81,14 @@ const BannerPage = () => {
             <div className="flex flex-col">
               <p className="text-bold text-lg capitalize primaryColor">
                 {bannerData?.name}
+              </p>
+            </div>
+          );
+        case "type":
+          return (
+            <div className="flex flex-col">
+              <p className=" text-lg uppercase text-slate-700">
+                {bannerData?.type}
               </p>
             </div>
           );

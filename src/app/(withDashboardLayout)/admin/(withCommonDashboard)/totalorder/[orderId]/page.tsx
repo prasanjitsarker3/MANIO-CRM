@@ -100,7 +100,7 @@ const ViewOrderPage: React.FC<OrderProps> = ({ params }) => {
                     <td className="py-2 px-4">{item.quantity}</td>
                     <td className="py-2 px-4">{item.size.join(", ")}</td>
                     <td className="py-2 px-4">
-                      Tk- {item.product.price.toFixed(2)}
+                      Tk- {(item.product.price * item.quantity).toFixed(2)}
                     </td>
                   </tr>
                 ))}

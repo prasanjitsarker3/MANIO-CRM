@@ -17,10 +17,19 @@ const metaDataApi = baseApi.injectEndpoints({
       }),
       providesTags: ["meta"],
     }),
+    getMonthlyData: builder.query({
+      query: (arg: any) => ({
+        url: "/meta/monthlyMetaData",
+        method: "GET",
+        params: arg,
+      }),
+      providesTags: ["meta"],
+    }),
   }),
 });
 
 export const {
   useGetModeratorDashboardDataQuery,
   useGetAdminDashboardDataQuery,
+  useGetMonthlyDataQuery,
 } = metaDataApi;

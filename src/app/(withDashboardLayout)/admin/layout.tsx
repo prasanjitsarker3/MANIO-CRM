@@ -18,7 +18,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
       >
         <DashboardNavbar />
         {children}
-        <div className="w-full justify-center py-2 flex items-center gap-2 text-lg text-center font-bold primaryColor">
+        <div className="w-full uppercase pt-3 justify-center py-2 flex items-center gap-2 text-lg text-center font-bold primaryColor">
           <h1>Developed by</h1>
           <a
             href="https://www.wevloper.com"

@@ -65,6 +65,7 @@ const orderApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["order"],
     }),
+
     orderStatusUpdate: builder.mutation({
       query: (data: any) => {
         return {
@@ -74,6 +75,15 @@ const orderApi = baseApi.injectEndpoints({
         };
       },
       invalidatesTags: ["order", "product", "meta"],
+    }),
+
+    discountAndDeliveryFromDB: builder.mutation({
+      query: (orderData: any) => ({
+        url: `/order/updateDiscount`,
+        method: "PATCH",
+        body: orderData,
+      }),
+      invalidatesTags: ["order"],
     }),
   }),
 });
@@ -88,4 +98,5 @@ export const {
   usePdfDownloadFromDBMutation,
   useGetAllOrderForAdminQuery,
   useGetAllReturnOrderQuery,
+  useDiscountAndDeliveryFromDBMutation,
 } = orderApi;

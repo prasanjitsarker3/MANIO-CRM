@@ -3,10 +3,14 @@
 "use client";
 import AddNewCategory from "@/components/AdminDashboardRoute/CategoryManagement/AddNewCategory";
 import DeletedCategory from "@/components/AdminDashboardRoute/CategoryManagement/DeletedCategory";
-import { useGetAllCategoryQuery } from "@/components/Redux/CategoryApi/categoryApi";
+import {
+  useGetAllCategoryQuery,
+  useToggleCategoryMutation,
+} from "@/components/Redux/CategoryApi/categoryApi";
 import {
   Pagination,
   Spinner,
+  Switch,
   Table,
   TableBody,
   TableCell,
@@ -17,16 +21,19 @@ import {
 import { Search } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
+import { toast } from "sonner";
 
 const columns = [
   { name: "PROFILE", uid: "image" },
   { name: "NAME", uid: "name" },
+  { name: "FEATURE", uid: "isFeature" },
   { name: "CREATE DATE", uid: "createdAt" },
   { name: "ACTIONS", uid: "actions" },
 ];
 
 const CategoryPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [toggleCategory] = useToggleCategoryMutation();
   const [page, setPage] = useState(1);
   const [limit] = useState(10);
 
@@ -42,6 +49,16 @@ const CategoryPage = () => {
       <Spinner size="lg" className=" primaryColor" />
     </div>;
   }
+
+  const handleToggleFeature = React.useCallback(
+    async (id: string) => {
+      const res = await toggleCategory(id);
+      if (res?.data?.statusCode === 200) {
+        toast.success("Update Successfully !");
+      }
+    },
+    [toggleCategory]
+  );
 
   const renderCell = React.useCallback(
     (categoryData: any, columnKey: React.Key) => {
@@ -73,6 +90,12 @@ const CategoryPage = () => {
               </p>
             </div>
           );
+        case "isFeature":
+          return (
+            <p className="text-bold text-lg capitalize primaryColor">
+              {categoryData?.isFeature ? "Feature" : "Normal"}
+            </p>
+          );
 
         case "createdAt":
           return (
@@ -89,7 +112,13 @@ const CategoryPage = () => {
 
         case "actions":
           return (
-            <div className=" w-full relative flex justify-center items-center gap-2">
+            <div className=" w-full flex justify-center items-center gap-2">
+              <Switch
+                onClick={() => handleToggleFeature(categoryData?.id)}
+                size="sm"
+                isSelected={categoryData?.isFeature || false}
+                aria-label="Automatic updates"
+              />
               <DeletedCategory orderId={categoryData?.id} />
             </div>
           );
@@ -97,7 +126,7 @@ const CategoryPage = () => {
           return cellValue;
       }
     },
-    []
+    [handleToggleFeature]
   );
 
   const categoryData = data?.data?.data || [];

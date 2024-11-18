@@ -30,6 +30,14 @@ const categoryApi = baseApi.injectEndpoints({
       invalidatesTags: ["category"],
     }),
 
+    toggleCategory: builder.mutation({
+      query: (id: string) => ({
+        url: `/category/update/${id}`,
+        method: "PATCH",
+      }),
+      invalidatesTags: ["category"],
+    }),
+
     createNewBanner: builder.mutation({
       query: (data: any) => ({
         url: "/banner/create",
@@ -65,4 +73,5 @@ export const {
   useCreateNewBannerMutation,
   useGetAllBannerQuery,
   useDeleteBannerMutation,
+  useToggleCategoryMutation,
 } = categoryApi;

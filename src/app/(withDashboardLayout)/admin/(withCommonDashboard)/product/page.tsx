@@ -90,7 +90,7 @@ const ProductPage = () => {
           return (
             <div className="flex flex-col">
               <p className="text-bold text-lg capitalize primaryColor">
-                {productData?.name}
+                {productData?.name?.slice(0, 20)}
               </p>
             </div>
           );
