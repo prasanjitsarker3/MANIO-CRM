@@ -207,7 +207,7 @@ const ViewOrderPage: React.FC<OrderProps> = ({ params }) => {
                       </tr>
                     ))}
 
-                    {/* Subtotal Row */}
+                    {/* Subtotal Row Added */}
 
                     <tr className=" text-left font-semibold">
                       <td className="py-1 px-4 bg-gray-100"></td>
