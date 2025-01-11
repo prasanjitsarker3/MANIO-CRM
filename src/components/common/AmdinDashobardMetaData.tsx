@@ -37,7 +37,7 @@ const AmdinDashobardMetaData = () => {
           <div className="bg-gray-100 hover:bg-[#ceecf5] p-6 ">
             <div className=" text-center space-y-1  py-2">
               <h1 className=" text-lg  font-bold primaryColor">
-                Total Products Check
+                Total Products Calculation
               </h1>
               <PackageOpen className=" w-full flex justify-center primaryColor" />
               <h1 className=" text-lg  font-bold primaryColor">
